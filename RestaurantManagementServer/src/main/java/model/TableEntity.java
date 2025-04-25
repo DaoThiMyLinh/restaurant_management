@@ -1,0 +1,64 @@
+package model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import model.enums.TableStatusEnum;
+
+import java.io.Serializable;
+import java.util.Set;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "tables")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class TableEntity implements Serializable {
+    @Id
+    @Column(name = "table_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long tableId;
+
+    @Column(name = "capacity", nullable = false)
+    private int capacity;
+
+    @Column(name ="name", columnDefinition = "nvarchar(50)")
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "table_status", nullable = false, columnDefinition = "nvarchar(50)")
+    private TableStatusEnum tableStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "floor_id")
+    @ToString.Exclude
+    private FloorEntity floor;
+
+    @OneToMany(mappedBy = "table", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<OrderEntity> orders;
+
+    public TableEntity(Long tableId) {
+        this.tableId = tableId;
+    }
+
+    public TableEntity(Long tableId, String name) {
+        setTableId(tableId);
+        setName(name);
+    }
+
+    public TableEntity(String name, Integer capacity, TableStatusEnum tableStatus, FloorEntity floor) {
+        setName(name);
+        this.capacity = capacity;
+        this.tableStatus = tableStatus;
+        this.floor = floor;
+    }
+
+    public TableEntity(Long tableId, String name, Integer capacity, TableStatusEnum tableStatus, FloorEntity floor) {
+        setName(name);
+        this.capacity = capacity;
+        this.tableStatus = tableStatus;
+        this.floor = floor;
+    }
+}

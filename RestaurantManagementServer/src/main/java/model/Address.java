@@ -2,24 +2,27 @@ package model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
-@ToString
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Embeddable
+@Data
 public class Address implements Serializable {
+    @Column(name = "street", columnDefinition = "nvarchar(255)")
     private String street;
+
+    @Column(name = "ward", columnDefinition = "nvarchar(255)")
+    private String ward;
+
+    @Column(name = "district", columnDefinition = "nvarchar(255)")
+    private String district;
+
+    @Column(name = "city", columnDefinition = "nvarchar(255)")
     private String city;
-    private String state;
-    @Column(name = "zip_code")
-    private int zipCode;
 
 }

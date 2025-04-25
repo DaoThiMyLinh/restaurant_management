@@ -1,21 +1,14 @@
 package dao;
 
-import model.Customer;
 import jakarta.persistence.EntityManager;
+import model.CustomerEntity;
 
-public class CustomerDAO extends GenericDAO<Customer, Integer> {
-    public CustomerDAO(Class<Customer> clazz) {
-        super(clazz);
+public class CustomerDAO extends GenericDAO<CustomerEntity, Integer> {
+    public CustomerDAO() {
+        super(CustomerEntity.class);
     }
 
-    public CustomerDAO(EntityManager em, Class<Customer> clazz) {
-        super(em, clazz);
-    }
-
-
-    public static void main(String[] args) {
-        CustomerDAO customerDAO = new CustomerDAO(Customer.class);
-        Customer customer = customerDAO.findById(1);
-        System.out.println(customer);
+    public CustomerDAO(EntityManager em) {
+        super(em, CustomerEntity.class);
     }
 }

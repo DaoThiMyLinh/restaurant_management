@@ -1,8 +1,8 @@
 package service;
 
-import model.Customer;
+import model.CustomerEntity;
 
-public interface CustomerService extends GenericService<Customer, Integer> {
+public interface CustomerService extends GenericService<CustomerEntity, Integer> {
 
 
 }
