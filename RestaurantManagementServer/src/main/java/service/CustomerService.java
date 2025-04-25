@@ -2,7 +2,9 @@ package service;
 
 import model.CustomerEntity;
 
-public interface CustomerService extends GenericService<CustomerEntity, Integer> {
+import java.rmi.RemoteException;
 
+public interface CustomerService extends GenericService<CustomerEntity, Long> {
 
+    CustomerEntity findByPhone(String phone) throws RemoteException;
 }

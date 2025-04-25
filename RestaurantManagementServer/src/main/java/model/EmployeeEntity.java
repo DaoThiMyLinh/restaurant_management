@@ -24,6 +24,9 @@ public class EmployeeEntity extends BaseEntity implements Serializable {
     @Column(name = "employee_id")
     private Long employeeId;
 
+    @Column(name = "username", nullable = false)
+    private String username;
+
     @Column(name = "password", nullable = false)
     private String password;
 

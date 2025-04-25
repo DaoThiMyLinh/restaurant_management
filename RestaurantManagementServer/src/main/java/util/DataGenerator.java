@@ -6,6 +6,7 @@ import model.*;
 import model.enums.TableStatusEnum;
 import net.datafaker.Faker;
 
+import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -107,6 +108,7 @@ public class DataGenerator {
     public EmployeeEntity generateEmployeeEntity(RoleEntity role) {
         EmployeeEntity employee = new EmployeeEntity();
 
+        employee.setUsername(generateCleanUsername());
         employee.setPassword(faker.internet().password(8, 16));
         employee.setFullname(faker.name().fullName());
         employee.setPhoneNumber(generateVietnamesePhoneNumber());
@@ -117,6 +119,20 @@ public class DataGenerator {
 
         return employee;
     }
+
+    public String generateCleanUsername() {
+        String rawName = faker.name().fullName(); // Ví dụ: "Trần Ngọc Huyền"
+
+        // Loại bỏ dấu tiếng Việt và ký tự đặc biệt
+        String clean = Normalizer.normalize(rawName, Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "") // bỏ dấu
+                .replaceAll("[^a-zA-Z0-9]", "")                      // bỏ ký tự đặc biệt
+                .toLowerCase();                                      // viết thường
+
+        // Gắn số ngẫu nhiên đằng sau để tránh trùng lặp
+        return clean + faker.number().numberBetween(100, 999);
+    }
+
 
     // CustomerEntity
     public CustomerEntity generateCustomerEntity() {

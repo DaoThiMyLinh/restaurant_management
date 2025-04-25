@@ -71,6 +71,7 @@ public class OrderEntity extends BaseEntity implements Serializable {
     public OrderEntity() {
         this.paymentStatus = PaymentStatusEnum.UNPAID;
         this.orderDetails = new HashSet<>();
+        setTotalPrice();
     }
 
     public OrderEntity(Long orderId) {
